@@ -1,2 +1,2 @@
-# mirai-api
+# backend-api
 Backend api created with nodeJs
