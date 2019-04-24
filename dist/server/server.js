@@ -4,6 +4,7 @@ const restify = require("restify");
 const mongoose = require("mongoose");
 const environment_1 = require("../common/environment");
 const merge_patch_parser_1 = require("./merge-patch.parser");
+const error_handle_1 = require("./error.handle");
 class Server {
     initializeDb() {
         mongoose.set('useCreateIndex', true);
@@ -30,6 +31,7 @@ class Server {
                 this.application.listen(environment_1.environment.server.port, () => {
                     resolve(this.application);
                 });
+                this.application.on('restifyError', error_handle_1.handleError);
             }
             catch (error) {
                 reject(error);
