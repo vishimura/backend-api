@@ -33,15 +33,20 @@ class ProfessionalRouter extends model_router_1.ModelRouter {
             }).catch(next);
         };
     }
+    envelope(document) {
+        let resource = super.envelope(document);
+        resource._links.menu = `${this.basePath}/${resource._id}/skills`;
+        return resource;
+    }
     applyRoutes(application) {
-        application.get('/professionals', this.findAll);
-        application.get('/professionals/:id', [this.validateId, this.findById]);
-        application.post('/professionals', this.save);
-        application.put('/professionals/:id', [this.validateId, this.replace]);
-        application.patch('/professionals/:id', [this.validateId, this.update]);
-        application.del('/professionals/:id', [this.validateId, this.delete]);
-        application.get('/professionals/:id/skills', [this.validateId, this.findSkills]);
-        application.put('/professionals/:id/skills', [this.validateId, this.replaceSkill]);
+        application.get(`${this.basePath}`, this.findAll);
+        application.get(`${this.basePath}/:id`, [this.validateId, this.findById]);
+        application.post(`${this.basePath}`, this.save);
+        application.put(`${this.basePath}/:id`, [this.validateId, this.replace]);
+        application.patch(`${this.basePath}/:id`, [this.validateId, this.update]);
+        application.del(`${this.basePath}/:id`, [this.validateId, this.delete]);
+        application.get(`${this.basePath}/:id/skills`, [this.validateId, this.findSkills]);
+        application.put(`${this.basePath}/:id/skills`, [this.validateId, this.replaceSkill]);
     }
 }
 exports.professionalRouter = new ProfessionalRouter();
