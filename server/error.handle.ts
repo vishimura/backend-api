@@ -1,7 +1,6 @@
 import * as restify from 'restify'
 
 export const handleError = (req: restify.Request, resp: restify.Response, err, done) => {
-    console.log(err)
     err.toJSON = () => {
         return {
             message: err.message
@@ -20,6 +19,7 @@ export const handleError = (req: restify.Request, resp: restify.Response, err, d
                 messages.push({message: err.errors[name].message})
             }
             err.toJSON = () => ({
+                message: 'Validation error while processing your request',
                 errors: messages
             })
             break

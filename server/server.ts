@@ -10,7 +10,7 @@ export class Server {
 
     application: restify.Server
 
-    initializeDb() {  
+    initializeDb() {
         mongoose.set('useCreateIndex', true)
         mongoose.set('useFindAndModify', false);
         return mongoose.connect(environment.db.url, {
@@ -41,7 +41,7 @@ export class Server {
                     resolve(this.application)
                 })
 
-                this.application.on('restifyError', handleError )
+                this.application.on('restifyError', handleError)
 
             } catch (error) {
                 reject(error)
@@ -52,5 +52,9 @@ export class Server {
         return this.initializeDb().then(() =>
             this.initRoutes(routers).then(() => this)
         )
+    }
+
+    shutdown() {
+        return mongoose.disconnect().then(() => this.application.close())
     }
 }
