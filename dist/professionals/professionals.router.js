@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const model_router_1 = require("../common/model-router");
 const professionals_model_1 = require("./professionals.model");
 const restify_errors_1 = require("restify-errors");
+const authz_handle_1 = require("../security/authz.handle");
 class ProfessionalRouter extends model_router_1.ModelRouter {
     constructor() {
         super(professionals_model_1.Professional);
@@ -41,12 +42,12 @@ class ProfessionalRouter extends model_router_1.ModelRouter {
     applyRoutes(application) {
         application.get(`${this.basePath}`, this.findAll);
         application.get(`${this.basePath}/:id`, [this.validateId, this.findById]);
-        application.post(`${this.basePath}`, this.save);
-        application.put(`${this.basePath}/:id`, [this.validateId, this.replace]);
-        application.patch(`${this.basePath}/:id`, [this.validateId, this.update]);
-        application.del(`${this.basePath}/:id`, [this.validateId, this.delete]);
+        application.post(`${this.basePath}`, [authz_handle_1.authorize('admin'), this.save]);
+        application.put(`${this.basePath}/:id`, [authz_handle_1.authorize('admin'), this.validateId, this.replace]);
+        application.patch(`${this.basePath}/:id`, [authz_handle_1.authorize('admin'), this.validateId, this.update]);
+        application.del(`${this.basePath}/:id`, [authz_handle_1.authorize('admin'), this.validateId, this.delete]);
         application.get(`${this.basePath}/:id/skills`, [this.validateId, this.findSkills]);
-        application.put(`${this.basePath}/:id/skills`, [this.validateId, this.replaceSkill]);
+        application.put(`${this.basePath}/:id/skills`, [authz_handle_1.authorize('admin'), this.validateId, this.replaceSkill]);
     }
 }
 exports.professionalRouter = new ProfessionalRouter();

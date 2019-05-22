@@ -8,8 +8,29 @@
   "repository": "https://github.com/vishimura/backend-api.git",
   "author": "vishimura <vitor.shimura@hotmail.com>",
   "license": "MIT",
+  "jest": {
+    "verbose": true,
+    "globals": {
+      "address": "http://localhost:3001",
+      "auth": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBlbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.HCtLeNy5-33THRqf03ayTWV0UiTNEuBgKzE-G_03d3g"
+    },
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.3",
     "nodemon": "^1.18.11",
     "restify": "^8.3.0",
@@ -17,15 +38,17 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
-    "@types/jest": "^24.0.12",
+    "@types/jest": "22.1.2",
+    "@types/jsonwebtoken": "^8.3.2",
     "@types/mongoose": "^5.3.26",
     "@types/restify": "^7.2.9",
     "@types/restify-errors": "^4.3.3",
     "@types/supertest": "^2.0.7",
-    "jest": "24.8.0",
-    "jest-cli": "^24.8.0",
+    "jest": "22.4.2",
+    "jest-cli": "22.4.2",
     "supertest": "^4.0.2",
-    "ts-node": "^8.1.0",
+    "ts-jest": "23.0.0",
+    "ts-node": "5.0.1",
     "typescript": "^3.4.5"
   }
 }

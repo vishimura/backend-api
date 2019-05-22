@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose'
 import { ModelRouter } from '../common/model-router'
 import { Review } from './reviews.model'
 import { NotFoundError } from 'restify-errors';
+import { authorize } from '../security/authz.handle';
 
 class ReviewsRouter extends ModelRouter<Review> {
     constructor() {
@@ -25,7 +26,7 @@ class ReviewsRouter extends ModelRouter<Review> {
 
         application.get(`${this.basePath}`, this.findAll)
         application.get(`${this.basePath}/:id`, [this.validateId, this.findById])
-        application.post(`${this.basePath}`, this.save)
+        application.post(`${this.basePath}`, [authorize('user'), this.save])
     }
 }
 
